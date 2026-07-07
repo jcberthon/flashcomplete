@@ -1,0 +1,163 @@
+{
+  "name": "flashcomplete",
+  "displayName": "FlashComplete",
+  "description": "Local-first, ultra-fast inline code completion against a llama.cpp server you run yourself. Model-agnostic engine; Ollama and OpenAI-compatible backends arrive in v1.0.",
+  "version": "0.9.0",
+  "publisher": "flashcomplete",
+  "license": "MIT",
+  "private": true,
+  "engines": {
+    "vscode": "^1.90.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Machine Learning",
+    "Other"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onStartupFinished"
+  ],
+  "contributes": {
+    "configuration": {
+      "title": "FlashComplete",
+      "properties": {
+        "flashcomplete.endpoint": {
+          "type": "string",
+          "default": "http://127.0.0.1:8012",
+          "markdownDescription": "Base URL of the llama.cpp server you started manually, e.g. `llama-server -m model.gguf --port 8012`."
+        },
+        "flashcomplete.apiKey": {
+          "type": "string",
+          "default": "",
+          "markdownDescription": "API key, only if the server was started with `--api-key`."
+        },
+        "flashcomplete.enabled": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable FlashComplete inline completions."
+        },
+        "flashcomplete.autoTrigger": {
+          "type": "boolean",
+          "default": true,
+          "description": "Show completions automatically while typing. When off, use the 'FlashComplete: Trigger Completion' command."
+        },
+        "flashcomplete.debounceMs": {
+          "type": "number",
+          "default": 0,
+          "description": "Delay in milliseconds before an automatic completion request is sent."
+        },
+        "flashcomplete.requestTimeoutMs": {
+          "type": "number",
+          "default": 4000,
+          "description": "Client-side timeout for a completion request, in milliseconds."
+        },
+        "flashcomplete.nPrefix": {
+          "type": "number",
+          "default": 256,
+          "description": "Lines before the cursor included in the completion context."
+        },
+        "flashcomplete.nSuffix": {
+          "type": "number",
+          "default": 64,
+          "description": "Lines after the cursor included in the completion context."
+        },
+        "flashcomplete.nPredict": {
+          "type": "number",
+          "default": 128,
+          "description": "Maximum number of tokens to generate per completion."
+        },
+        "flashcomplete.maxLineSuffix": {
+          "type": "number",
+          "default": 8,
+          "description": "Skip automatic completion when more than this many characters follow the cursor on the current line."
+        },
+        "flashcomplete.maxCacheKeys": {
+          "type": "number",
+          "default": 250,
+          "description": "Capacity of the client-side completion cache."
+        },
+        "flashcomplete.ringNChunks": {
+          "type": "number",
+          "default": 16,
+          "description": "Maximum number of context chunks kept in the ring buffer."
+        },
+        "flashcomplete.ringChunkSize": {
+          "type": "number",
+          "default": 64,
+          "description": "Maximum lines per context chunk."
+        },
+        "flashcomplete.ringScope": {
+          "type": "number",
+          "default": 1024,
+          "description": "How many lines around the cursor are eligible for context chunk gathering."
+        },
+        "flashcomplete.ringUpdateMs": {
+          "type": "number",
+          "default": 1000,
+          "description": "Interval in milliseconds for draining queued context chunks (and warming the server cache when supported)."
+        },
+        "flashcomplete.tMaxPromptMs": {
+          "type": "number",
+          "default": 500,
+          "description": "Server-side hint: maximum prompt processing time in milliseconds (llama.cpp)."
+        },
+        "flashcomplete.tMaxPredictMs": {
+          "type": "number",
+          "default": 2500,
+          "description": "Server-side hint: maximum prediction time in milliseconds (llama.cpp)."
+        }
+      }
+    },
+    "commands": [
+      {
+        "command": "flashcomplete.triggerCompletion",
+        "title": "FlashComplete: Trigger Completion"
+      },
+      {
+        "command": "flashcomplete.triggerNoCache",
+        "title": "FlashComplete: Trigger Completion (Bypass Cache)"
+      },
+      {
+        "command": "flashcomplete.acceptFirstLine",
+        "title": "FlashComplete: Accept First Line of Suggestion"
+      },
+      {
+        "command": "flashcomplete.acceptNextWord",
+        "title": "FlashComplete: Accept Next Word of Suggestion"
+      },
+      {
+        "command": "flashcomplete.toggle",
+        "title": "FlashComplete: Enable/Disable Completions"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "flashcomplete.triggerCompletion",
+        "key": "alt+\\",
+        "when": "editorTextFocus && !editorReadonly"
+      },
+      {
+        "command": "flashcomplete.acceptFirstLine",
+        "key": "shift+tab",
+        "when": "inlineSuggestionVisible && editorTextFocus"
+      },
+      {
+        "command": "flashcomplete.acceptNextWord",
+        "key": "ctrl+alt+right",
+        "when": "inlineSuggestionVisible && editorTextFocus"
+      }
+    ]
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "package": "vsce package --allow-missing-repository --no-dependencies -o ../../flashcomplete-0.9.0.vsix"
+  },
+  "dependencies": {
+    "@flashcomplete/core": "0.9.0"
+  },
+  "devDependencies": {
+    "@types/vscode": "~1.90.0"
+  }
+}

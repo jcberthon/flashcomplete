@@ -1,1 +1,9 @@
 reference/
+node_modules/
+dist/
+out/
+coverage/
+docs/archive/
+*.vsix
+*.tsbuildinfo
+.DS_Store

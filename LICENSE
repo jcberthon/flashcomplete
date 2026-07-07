@@ -1,5 +1,7 @@
 MIT License
 
+Copyright (c) 2026 The FlashComplete contributors
+Portions ported from llama.vscode (https://github.com/ggml-org/llama.vscode),
 Copyright (c) 2025 The llama.vscode contributors
 
 Permission is hereby granted, free of charge, to any person obtaining a copy

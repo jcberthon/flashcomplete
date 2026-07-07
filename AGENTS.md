@@ -70,10 +70,18 @@ it should require zero changes to the engine itself.
 
 ## Build & test
 
-_TODO once tooling is chosen — assuming pnpm workspaces:_
-- `pnpm install`
-- `pnpm -F core test`
-- `pnpm -F adapters-vscode build` / `pnpm -F adapters-vscode package`
+npm workspaces (`core`, `adapters/vscode`), Node ≥ 20:
+
+- `npm install` — install everything
+- `npm run verify` — the quality gate: Prettier check → ESLint (type-checked rules,
+  including the rule that forbids `vscode` imports under `core/`) → build → strict
+  `tsc` typecheck → Vitest unit tests. Run this before considering any change done.
+- `npm run build` — builds `core` (tsc → `core/dist`) then bundles the extension
+  (esbuild → `adapters/vscode/dist/extension.js`). Note: `npm run typecheck` on the
+  adapter needs `core/dist` to exist, so build (or `verify`) first on a fresh checkout.
+- `npm run test` — core unit tests (Vitest)
+- `npm run package` — `vsce` → installable `.vsix` at the repo root
+- `npm run format` — apply Prettier
 
 ## Scope discipline
 

@@ -74,12 +74,31 @@ tier.
 
 ## Status
 
-Early stage. The design was validated by an architectural review of
+**v0.9** — the first working release. The engine (`core/`) and the VS Code
+adapter (`adapters/vscode/`) are built and unit-tested; the llama.cpp `/infill`
+backend is the one shipping backend. You launch the server yourself:
+
+```sh
+llama-server -m Qwen2.5-Coder-1.5B-Q8_0.gguf --port 8012
+```
+
+then install the extension (`npm install && npm run package` →
+`flashcomplete-0.9.0.vsix`) and set `flashcomplete.endpoint` if you changed the
+port. `npm run verify` runs the full quality gate (format, lint with the
+core-purity rule, strict typecheck, unit tests).
+
+Roadmap: **v1.0** adds Ollama-native and OpenAI-compatible backends plus a VS
+Code integration-test harness; **v1.1** adds the chat-completion fallback;
+the draft→verify multi-model chaining above is v2 territory. Deferred ideas
+live in [docs/FUTURE_WORK.md](docs/FUTURE_WORK.md).
+
+The design was validated by an architectural review of
 [llama.vscode](https://github.com/ggml-org/llama.vscode), whose completion
 pipeline (debounce, LRU/speculative caching, ring-buffer context, KV-cache
 warm-up) is sound and partly reused here. See
 [docs/ARCHITECTURE-REVIEW.md](docs/ARCHITECTURE-REVIEW.md) for the full
-analysis and reference source under `reference/llama-vscode/`.
+analysis, [ATTRIBUTIONS.md](ATTRIBUTIONS.md) for the ported-code inventory, and
+the reference source under `reference/llama-vscode/`.
 
 ## Credits
 

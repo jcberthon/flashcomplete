@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run FlashComplete Extension",
+      "type": "extensionHost",
+      "request": "launch",
+      "args": ["--extensionDevelopmentPath=${workspaceFolder}/adapters/vscode"],
+      "outFiles": ["${workspaceFolder}/adapters/vscode/dist/**/*.js"],
+      "preLaunchTask": "npm: build"
+    }
+  ]
+}

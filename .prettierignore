@@ -1,0 +1,10 @@
+node_modules
+dist
+out
+coverage
+*.vsix
+package-lock.json
+reference/
+docs/
+*.md
+.claude/
