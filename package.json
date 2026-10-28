@@ -33,5 +33,8 @@
     "esbuild@0.28.2": true,
     "@vscode/vsce-sign@2.0.9": true,
     "keytar@7.9.0": true
+  },
+  "overrides": {
+    "@azure/msal-node": "^7.1.2"
   }
 }
